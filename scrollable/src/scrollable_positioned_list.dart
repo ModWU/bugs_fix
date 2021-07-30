@@ -416,12 +416,12 @@ class _ScrollablePositionedListState extends State<ScrollablePositionedList>
       primary.scrollController.jumpTo(0);
       primary.target = index;
       primary.alignment = alignment;
-    });*/
+    });
+
+    primary.target = index;
+    primary.alignment = alignment;*/
 
     //bug 修改
-    primary.target = index;
-    primary.alignment = alignment;
-
     final itemPosition = primary.itemPositionsNotifier.itemPositions.value
         .firstWhere((ItemPosition itemPosition) => itemPosition.index == index,
             orElse: () => null);
