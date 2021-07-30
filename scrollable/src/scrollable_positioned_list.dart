@@ -435,8 +435,12 @@ class _ScrollablePositionedListState extends State<ScrollablePositionedList>
       double needScrollPosition = primary.scrollController.offset +
           localScrollAmount -
           alignment * primary.scrollController.position.viewportDimension;
-
-      needScrollPosition = needScrollPosition.clamp(0.0, maxScrollExtent);
+      //needScrollPosition = needScrollPosition.clamp(0, maxScrollExtent);
+      if (needScrollPosition < 0) {
+        needScrollPosition = 0;
+      } else if (needScrollPosition > maxScrollExtent){
+        needScrollPosition = maxScrollExtent;
+      }
 
       primary.scrollController.jumpTo(needScrollPosition);
     }
@@ -496,7 +500,12 @@ class _ScrollablePositionedListState extends State<ScrollablePositionedList>
           localScrollAmount -
           alignment * primary.scrollController.position.viewportDimension;
 
-      needScrollPosition = needScrollPosition.clamp(0.0, maxScrollExtent);
+      //needScrollPosition = needScrollPosition.clamp(0.0, maxScrollExtent);
+      if (needScrollPosition < 0) {
+        needScrollPosition = 0;
+      } else if (needScrollPosition > maxScrollExtent){
+        needScrollPosition = maxScrollExtent;
+      }
 
       await primary.scrollController
           .animateTo(needScrollPosition, duration: duration, curve: curve);
@@ -521,13 +530,23 @@ class _ScrollablePositionedListState extends State<ScrollablePositionedList>
                   alignment *
                       secondary.scrollController.position.viewportDimension);
 
-          needJumpPosition = needJumpPosition.clamp(0.0, maxScrollExtent);
+          //needJumpPosition = needJumpPosition.clamp(0.0, maxScrollExtent);
+          if (needJumpPosition < 0) {
+            needJumpPosition = 0;
+          } else if (needJumpPosition > maxScrollExtent){
+            needJumpPosition = maxScrollExtent;
+          }
 
           secondary.scrollController.jumpTo(needJumpPosition);
 
           needJumpPosition =
               primary.scrollController.offset + direction * scrollAmount;
-          needJumpPosition = needJumpPosition.clamp(0.0, maxScrollExtent);
+          //needJumpPosition = needJumpPosition.clamp(0.0, maxScrollExtent);
+          if (needJumpPosition < 0) {
+            needJumpPosition = 0;
+          } else if (needJumpPosition > maxScrollExtent){
+            needJumpPosition = maxScrollExtent;
+          }
 
           startCompleter.complete(primary.scrollController
               .animateTo(needJumpPosition, duration: duration, curve: curve));
